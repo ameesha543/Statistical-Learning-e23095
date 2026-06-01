@@ -1,7 +1,6 @@
 # data-analysis-tool
 
-A powerful Python toolkit for **data preprocessing, cleaning, feature engineering, and interactive visualization** designed specifically for **Google Colab workflows**.
-The package streamlines common data science operations including missing value treatment, outlier detection, normalization, categorical encoding, and statistical association analysis.
+A powerful Python toolkit for **data preprocessing, cleaning, feature engineering, and interactive visualization** designed specifically for **Google Colab workflows**. The package streamlines common data science operations including missing value treatment, outlier detection, normalization, categorical encoding, and statistical association analysis.
 
 ---
 
@@ -43,7 +42,7 @@ Supports multiple imputation strategies:
 #### Duplicate Removal
 
 * Detect and remove exact duplicate rows.
-* Reports number of removed duplicates.
+* Reports the number of removed duplicates.
 
 #### Outlier Management
 
@@ -104,7 +103,7 @@ Automatic **3-panel exploratory plots** containing:
 
 Automatically selects visualization type:
 
-| Variable Types            | Plot                    |
+| Variable Types            | Plot Type               |
 | ------------------------- | ----------------------- |
 | Numeric – Numeric         | Scatter + OLS Trendline |
 | Categorical – Numeric     | Box Plot                |
@@ -142,13 +141,13 @@ Results are visualized using **interactive Plotly heatmaps**.
 
 ## Installation
 
-### Standard Installation
+### Basic Installation
 
 ```bash
-pip install "git+https://github.com/yourusername/data-analysis-tool.git"
+pip install "git+https://github.com/mugalan/data-analysis-tool.git"
 ```
 
-### Install with Plotting Support
+### Installation with Plotting Support
 
 ```bash
 pip install data-analysis-tool[plotting]
@@ -160,18 +159,20 @@ pip install data-analysis-tool[plotting]
 
 ### 1. Data Upload & Cleaning
 
+Load a dataset and preprocess it in a simple workflow.
+
 ```python
 from data_analysis import DataInspector
 
 inspector = DataInspector()
 
-# Upload CSV file
+# Upload CSV file interactively
 inspector.upload_data()
 
 # Handle missing values
-inspector.handle_missing_values(strategy='mean')
+inspector.handle_missing_values(strategy='median')
 
-# Remove duplicates
+# Remove duplicate rows
 inspector.remove_duplicates()
 ```
 
@@ -179,33 +180,39 @@ inspector.remove_duplicates()
 
 ### 2. Dataset Inspection
 
+View the structure and summary of your dataset.
+
 ```python
 inspector.data_summary()
 ```
 
 ---
 
-### 3. Outlier Detection
+### 3. Outlier Detection & Removal
+
+Use IQR-based outlier handling.
 
 ```python
 # Detect outliers
 inspector.handle_outliers('Salary')
 
-# Remove outliers
+# Remove detected outliers
 inspector.handle_outliers('Salary', remove=True)
 ```
 
 ---
 
-### 4. Data Normalization & Encoding
+### 4. Feature Engineering & Normalization
+
+Prepare datasets for machine learning pipelines.
 
 ```python
-# Normalize numeric data
+# Normalize numeric columns
 numeric_df = inspector.extract_normalized_numeric_data(
-    method='standard'
+    method='robust'
 )
 
-# Encode categorical data
+# Encode categorical columns
 categorical_df = inspector.extract_normalized_categorical_data(
     method='onehot'
 )
@@ -219,15 +226,19 @@ final_df = inspector.merge_data(
 
 ---
 
-### 5. Interactive Visualization
+### 5. Exploratory Visualization
 
-#### Numerical Exploration
+#### Numerical Variable Visualization
+
+Generate a combined distribution view.
 
 ```python
-inspector.plot_numerical(['Age', 'Income'])
+inspector.plot_numerical(['Age', 'Salary'])
 ```
 
 #### Relationship Analysis
+
+Automatically selects the appropriate chart type.
 
 ```python
 inspector.plot_relationship(
@@ -238,6 +249,8 @@ inspector.plot_relationship(
 
 #### Association Heatmap
 
+Explore hidden statistical relationships.
+
 ```python
 inspector.plot_all_associations_heatmap()
 ```
@@ -246,7 +259,7 @@ inspector.plot_all_associations_heatmap()
 
 ### 6. PlottingMethods Utilities
 
-Direct plotting helpers return Plotly HTML output.
+The `PlottingMethods` class provides reusable plotting utilities returning Plotly HTML outputs.
 
 ```python
 from data_analysis import PlottingMethods
@@ -288,7 +301,7 @@ result = plotter.histogram_plot(
 data-analysis-tool/
 ├── data_analysis/
 │   ├── __init__.py
-│   └── core.py
+│   └── core.py        # Contains DataInspector and PlottingMethods
 ├── pyproject.toml
 └── README.md
 ```
@@ -302,10 +315,11 @@ data-analysis-tool/
 Responsible for:
 
 * Data ingestion
-* Cleaning
+* Data sanitization
 * Missing value handling
+* Duplicate removal
 * Outlier detection
-* Scaling
+* Normalization
 * Encoding
 * Dataset merging
 * Statistical visualization
@@ -316,19 +330,18 @@ Provides reusable modular plotting utilities:
 
 * Bar plots
 * Pie charts
-* Histograms
+* Histogram plots
 
-All figures are generated using **Plotly interactive visualization**.
+All charts are powered by **interactive Plotly visualization**.
 
 ---
 
 ## Authors
 
-Your Name — [your.email@example.com](mailto:your.email@example.com)
+Ameesha Fernando — [e23095@eng.pdn.ac.lk](mailto:e23095@eng.pdn.ac.lk)
 
 ---
 
 ## License
 
 This project is licensed under the **MIT License**.
-
